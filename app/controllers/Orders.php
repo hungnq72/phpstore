@@ -9,11 +9,7 @@
         public function add(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // add infor into order
-                $c = $this->cartModel->showSingle();     
-                $data = [
-                    'user_id' => $c->user_id
-                ];
-                if($this->orderModel->add($data)){
+                if($this->orderModel->add()){  
                     
                 }else{
                     echo "something went wrong";
@@ -35,7 +31,8 @@
                         'order_quantity' => (int)$cart->cart_quantity,
                         'order_detail_address' => trim($_POST['order_detail_address']),
                         'order_detail_total' => $total->total,
-                        'order_detail_total_cart' => (int)$cart->total_cart
+                        'order_detail_total_cart' => (int)$cart->total_cart,
+                        'seller_id' => (int)$cart->user_id
                     ];
                     
                     if($this->orderModel->addOrderDetail($data)){   
@@ -50,14 +47,60 @@
                 $sid = $this->orderModel->getSID();
                 if($this->cartModel->deleteAll($sid->s_id)){}
             }
-
         }
 
-        public function confirm(){
+        public function show(){
             $orders = $this->orderModel->getOrder();
             $data = [
                 "orders" => $orders
             ];
-            $this->view('orders/confirm', $data);
+            $this->view('orders/show', $data);
+        }
+
+        public function index(){
+            $orders = $this->orderModel->getOrder();
+            $data = [
+                "orders" => $orders
+            ];
+            $this->view('orders/index', $data);
+        }
+
+        public function cancel(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $ids = $_POST['orders'];
+                foreach($ids as $id){
+                    if($this->orderModel->cancelOrder($id)){
+                        echo "success";
+                    }
+                    
+                }
+            }
+        }
+
+        public function confirm(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $ids = $_POST['orders'];
+                foreach($ids as $id){
+                    if($this->orderModel->confirmOrder($id)){
+                        echo "success";
+                    }     
+                }
+            }
+        }
+
+        public function Confirmed(){
+            $orders = $this->orderModel->getOrderConfirmed();
+            $data = [
+                "orders" => $orders
+            ];
+            $this->view('orders/confirmed', $data);
+        }
+
+        public function showConfirmed(){
+            $orders = $this->orderModel->getOrderConfirmed();
+            $data = [
+                "orders" => $orders
+            ];
+            $this->view('orders/showConfirmed', $data);
         }
     }

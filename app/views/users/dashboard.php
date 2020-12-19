@@ -10,7 +10,10 @@
                     </a>
                 </div>
                 <div class="col-md-3" style='margin-bottom: 10px;'>
-                    <a href="<?php echo URLROOT; ?>/orders/confirm" class="btn btn-primary btn-block">Đơn hàng</a>
+                    <a href="<?php echo URLROOT; ?>/orders/index" class="btn btn-primary btn-block">Đơn hàng chờ</a>
+                </div>
+                <div class="col-md-3" style='margin-bottom: 10px;'>
+                    <a href="<?php echo URLROOT; ?>/orders/confirmed" class="btn btn-primary btn-block">Đơn hàng đã xác nhận</a>
                 </div>
             </div>
         </div>

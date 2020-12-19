@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/styles.css">
   <title><?php echo SITENAME; ?></title>
 </head>
-<body>
+<body style="padding-top: 80px;">
   <?php require APPROOT . '/views/inc/navbar.php'; ?>
 
   

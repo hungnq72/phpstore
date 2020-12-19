@@ -86,8 +86,8 @@
         }
 
         public function searchProducts($string){
-            $this->db->query("SELECT * FROM products where pd_name like :string or pd_description like :string");
-            $this->db->bind(":string", $string);
+            $this->db->query("SELECT * FROM products where pd_name like :string");
+            $this->db->bind(":string", '%' . $string . '%');
             return $this->db->resultSet();
         }
     }

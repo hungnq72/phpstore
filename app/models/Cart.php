@@ -6,10 +6,10 @@
         }
 
         public function add($data){
-            $this->db->query("INSERT INTO carts(pd_id, s_id, user_id, cart_quantity) VALUE(:pd_id, :s_id, :user_id, :cart_quantity)");
+            $this->db->query("INSERT INTO carts(pd_id, s_id, cart_quantity) VALUE(:pd_id, :s_id, :cart_quantity)");
             $this->db->bind(":pd_id", $data['pd_id']);
             $this->db->bind(":s_id", $_SESSION['user_id']);
-            $this->db->bind(":user_id", $data['user_id']);
+
             $this->db->bind(":cart_quantity", $data['cart_quantity']);
             if($this->db->execute()){
                 return true;
@@ -21,7 +21,7 @@
         public function show(){
             $this->db->query("SELECT *, pd_price*cart_quantity AS total_cart FROM carts
                               LEFT JOIN users 
-                              ON carts.user_id = users.id
+                              ON carts.s_id = users.id
                               LEFT JOIN products
                               ON carts.pd_id = products.pd_id
                               WHERE s_id = :s_id
@@ -34,7 +34,7 @@
         public function showSingle(){
             $this->db->query("SELECT * FROM carts
                               LEFT JOIN users 
-                              ON carts.user_id = users.id
+                              ON carts.s_id = users.id
                               LEFT JOIN products
                               ON carts.pd_id = products.pd_id
                               WHERE s_id = :s_id
@@ -47,7 +47,7 @@
         public function showTotal(){
             $this->db->query("SELECT SUM(pd_price*cart_quantity) AS total FROM carts
                               LEFT JOIN users 
-                              ON carts.user_id = users.id
+                              ON carts.s_id = users.id
                               LEFT JOIN products
                               ON carts.pd_id = products.pd_id
                               WHERE carts.s_id = :s_id
@@ -60,7 +60,7 @@
         public function showTotalCart(){
             $this->db->query("SELECT pd_price*cart_quantity AS total_cart FROM carts
                               LEFT JOIN users 
-                              ON carts.user_id = users.id
+                              ON carts.s_id = users.id
                               LEFT JOIN products
                               ON carts.pd_id = products.pd_id
                               WHERE carts.s_id = :s_id

@@ -8,7 +8,6 @@
         public function add($id){
             $data = [
                 'pd_id' => $id,
-                'user_id' => $_SESSION['user_id'],
                 'cart_quantity' => 1 
             ];
             if($this->cartModel->add($data)){
@@ -23,7 +22,6 @@
         public function buy($id){
             $data = [
                 'pd_id' => $id,
-                'user_id' => $_SESSION['user_id'],
                 'cart_quantity' => 1 
             ];
             if($this->cartModel->add($data)){

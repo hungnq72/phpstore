@@ -19,17 +19,15 @@
 
     public function search(){
       if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $str = $_POST['search'];
-        $products = $this->productModel->searchProducts($str);
+        $str = trim($_POST['search']);
+        if($products = $this->productModel->searchProducts($str)){
+          
+        }
         $data = [
-          'search' => trim($_POST['search']),
           'products' => $products
         ];
-        $this->view('pages/search', $data);
+        $this->view('pages/index', $data);
       }
-
-
- 
     }
 
     public function contact(){
