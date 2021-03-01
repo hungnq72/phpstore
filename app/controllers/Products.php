@@ -199,5 +199,25 @@
             $this->view('products/detail', $data);
         }
 
-        
+        public function showProductByCat($id){
+            $data = [
+                'cat_id' => $id
+            ];
+            $products = $this->productModel->getProductByCategoryID($data);
+            $data = [
+                'products' => $products
+            ];
+            $this->view('categories/showProduct', $data);
+        }
+
+        public function showProductBySearchBar($string){
+            $data = [
+                'pd_name' => $string
+            ];
+            $products = $this->productModel->getProductBySearchBar($data);
+            $data = [
+                'products' => $products
+            ];
+            $this->view('categories/showProduct', $data);
+        }
     }

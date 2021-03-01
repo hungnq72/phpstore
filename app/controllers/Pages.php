@@ -3,30 +3,60 @@
     public function __construct(){
       $this->pageModel = $this->model('Page');
       $this->productModel = $this->model('Product');
+      $this->catModel = $this->model('Category');
     }
     
     public function temp(){
-        redirect('pages/index');
+        redirect('pages/index/1');
     }
 
-    public function index(){
-      $products = $this->productModel->getProducts();
+    public function pagination(){
+      
+    }
+
+    public function index($id){
+      // pagination
+      if($id == 1){
+        $pg = 0;
+      }else{
+        $pg = ($id * 40) - 40;
+      }
+
+      $count = $this->productModel->countProduct();
+      $page = ceil($count->counting/40);
+
+      // show products
+      $products = $this->productModel->getProductsWithLimited($pg, 40);
+
+      // show categories
+      $categories = $this->catModel->getCategories();
       $data = [
-        'products' => $products
+        'products' => $products,
+        'categories' => $categories,
+        'page' => $page,
+        'currentPage' => $id
       ];
       $this->view('pages/index', $data);
+    }
+
+    public function product($id){
+      $product = $this->productModel->getProductByID($id);
+      $data = [
+        'product'=>$product
+      ];
+      $this->view('pages/product', $data);
     }
 
     public function search(){
       if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $str = trim($_POST['search']);
         if($products = $this->productModel->searchProducts($str)){
-          
+
         }
         $data = [
           'products' => $products
         ];
-        $this->view('pages/index', $data);
+        $this->view('pages/search', $data);
       }
     }
 
@@ -69,6 +99,17 @@
 
     public function show($id){
       $this->view("pages/show");
+    }
+
+    public function categories($id){
+      $data = [
+        'cat_id' => $id
+      ];
+      $products = $this->productModel->getAllProductByCategoryID($data);
+      $data = [
+        'products' => $products
+      ];
+      $this->view('pages/categories', $data);
     }
     
   }

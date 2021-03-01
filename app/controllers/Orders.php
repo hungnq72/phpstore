@@ -37,7 +37,7 @@
                     
                     if($this->orderModel->addOrderDetail($data)){   
                         flash("addOrder_success", "Đặt hàng thành công, vui lòng chờ thông báo xác nhận đơn hàng");
-                        redirect("pages/index");
+                        redirect("pages/index/1");
                     }else{
                         echo "something went wrong";
                     }

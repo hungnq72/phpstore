@@ -3,13 +3,16 @@
         public function __construct(){
             $this->userModel = $this->model('User');
             $this->productModel = $this->model('Product');
+            $this->catModel = $this->model('Category');
 
         }
 
         public function dashboard(){
             $products = $this->productModel->getProductsByUserID($_SESSION['user_id']);
+            $cat_id = $this->catModel->getCategories();
             $data = [
-                'products' => $products
+                'products' => $products,
+                'cat_id' => $cat_id
             ];
             $this->view('users/dashboard', $data);
         }
@@ -144,7 +147,7 @@
             $_SESSION['user_name'] = $user->name;
             $_SESSION['user_email'] = $user->email;
             $_SESSION['user_address'] = $user->address;
-            redirect('pages');
+            redirect('pages/index/1');
         }
 
         public function logout(){

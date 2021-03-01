@@ -12,11 +12,10 @@
             ];
             if($this->cartModel->add($data)){
                 flash('addToCart_success', 'Thêm vào giỏ hàng thành công');
-                redirect('pages/index');
+                redirect('pages/index/1');
             }else{
                 die("something went wrong");
             }
-          
         }
 
         public function buy($id){
@@ -66,5 +65,9 @@
             }else{
                 die("something went wrong");
             }
+        }
+
+        public function pay(){
+            $this->view('carts/pay');
         }
     }

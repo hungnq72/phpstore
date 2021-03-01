@@ -36,11 +36,11 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Thanh toán</h5>
+                        <h5 class="card-title">Đặt hàng</h5>
                         <p class="card-text">Tổng sản phẩm: <?php echo $data['total']->total; ?>đ</p>
                         <p class="card-text">Phí giao hàng: 30000đ </p>
                         <p class="card-text">Tổng tiền: <?php echo $data['total']->total + 30000; ?>đ</p>
-                        <a class="btn btn-success btn-block" href="#" data-toggle="modal" data-target="#order">Thanh toán</a>
+                        <a class="btn btn-success btn-block" href="#" data-toggle="modal" data-target="#order">Đặt hàng</a>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Xác nhận thanh toán</h5>
+                    <h5 class="modal-title">Xác nhận đặt hàng</h5>
                     <button class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -65,7 +65,10 @@
                         <?php endforeach; ?>
                         <p>Phí giao hàng: 30000đ</p>
                         <h6>Tổng tiền: <?php echo $data['total']->total + 30000; ?>đ</h6>  
-                        <input type="submit" class="btn btn-primary" value='Xác nhận thanh toán'>
+                        <span>
+                            <input type="submit" class="btn btn-primary" value='Xác nhận đặt hàng'>
+                            <a href="<?php echo URLROOT; ?>/carts/pay" class="btn btn-primary">Thanh toán</a>
+                        </span>
                     </form>
                 </div>
             </div>

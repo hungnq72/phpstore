@@ -59,6 +59,20 @@
             return $row;
         }
 
+        public function getProductsWithLimited($num1, $num2){
+            $this->db->query("SELECT * FROM products
+                              LEFT JOIN users 
+                              ON products.user_id = users.id
+                              LEFT JOIN categories
+                              ON products.cat_id = categories.cat_id
+                              LIMIT :num1, :num2 
+                              ");
+            $this->db->bind(":num1", $num1);
+            $this->db->bind(":num2", $num2);
+            $row = $this->db->resultSet();
+            return $row;
+        }
+
         public function getProductsByUserID($id){
             $this->db->query("SELECT * FROM products
                               LEFT JOIN users 
@@ -85,9 +99,57 @@
             return $row;
         }
 
+        public function getProductByCategoryID($data){
+            $this->db->query("SELECT * FROM products
+                              LEFT JOIN users 
+                              ON products.user_id = users.id
+                              LEFT JOIN categories
+                              ON products.cat_id = categories.cat_id
+                              WHERE products.cat_id = :cat_id
+                              AND products.user_id = :user_id
+                              ");
+            $this->db->bind(":cat_id", $data['cat_id']);
+            $this->db->bind(":user_id", $_SESSION['user_id']);
+            $row = $this->db->resultSet();
+            return $row;
+        }
+
+        public function getAllProductByCategoryID($data){
+            $this->db->query("SELECT * FROM products
+                              LEFT JOIN users 
+                              ON products.user_id = users.id
+                              LEFT JOIN categories
+                              ON products.cat_id = categories.cat_id
+                              WHERE products.cat_id = :cat_id
+                              ");
+            $this->db->bind(":cat_id", $data['cat_id']);
+            $row = $this->db->resultSet();
+            return $row;
+        }
+
+        public function getProductBySearchBar($data){
+            $this->db->query("SELECT * FROM products
+                              LEFT JOIN users 
+                              ON products.user_id = users.id
+                              LEFT JOIN categories
+                              ON products.cat_id = categories.cat_id
+                              WHERE products.pd_name like :pd_name
+                              AND products.user_id = :user_id
+                              ");
+            $this->db->bind(":pd_name", '%' . $data['pd_name'] . '%');
+            $this->db->bind(":user_id", $_SESSION['user_id']);
+            $row = $this->db->resultSet();
+            return $row;
+        }
+
         public function searchProducts($string){
             $this->db->query("SELECT * FROM products where pd_name like :string");
             $this->db->bind(":string", '%' . $string . '%');
             return $this->db->resultSet();
+        }
+
+        public function countProduct(){
+            $this->db->query("SELECT COUNT(*) as counting FROM products");
+            return $this->db->single();
         }
     }
